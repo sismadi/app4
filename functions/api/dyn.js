@@ -17,12 +17,12 @@ export async function onRequest(context) {
 
     const table = url.searchParams.get('table') || 'users'; // Nama tabel dari query parameter
 
-    if (path === '/api/' && method === 'GET') {
+    if (path === '/api/dyn/' && method === 'GET') {
         const { results } = await DB.prepare(`SELECT * FROM ${table}`).all();
         return Response.json(results);
     }
     
-    if (path === '/api/' && method === 'POST') {
+    if (path === '/api/dyn/' && method === 'POST') {
         try {
             const data = await request.json();
             const columns = Object.keys(data).join(', ');
@@ -36,7 +36,7 @@ export async function onRequest(context) {
         }
     }
 
-    if (path.startsWith('/api/') && method === 'PUT') {
+    if (path.startsWith('/api/dyn/') && method === 'PUT') {
         const id = url.searchParams.get('id');
         if (!id) return new Response('ID not provided', { status: 400, headers: corsHeaders });
 
@@ -52,7 +52,7 @@ export async function onRequest(context) {
         }
     }
 
-    if (path === '/api/' && method === 'DELETE') {
+    if (path === '/api/dyn/' && method === 'DELETE') {
         const id = url.searchParams.get('id');
         if (!id) return new Response('ID not provided', { status: 400, headers: corsHeaders });
 
